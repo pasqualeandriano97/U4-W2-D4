@@ -69,5 +69,9 @@ public class Application {
 
         orderByCustomer.forEach((utente,ordini)-> System.out.println("Customer "+utente +" " + ordini.stream().toList()));
         totalOrder.forEach((utente,ordini)-> System.out.println("Customer "+utente +" ha speso:" + ordini));
+
+        List<Product> productsSortedByPrice = productList.stream().sorted(Comparator.comparingDouble(Product::getPrice).reversed()).limit(3).toList();
+        System.out.println("Prodotti più costosi: ");
+        productsSortedByPrice.forEach(System.out::println);
     }
     }
