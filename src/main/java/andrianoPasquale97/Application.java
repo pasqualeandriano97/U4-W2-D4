@@ -69,9 +69,16 @@ public class Application {
 
         orderByCustomer.forEach((utente,ordini)-> System.out.println("Customer "+utente +" " + ordini.stream().toList()));
         totalOrder.forEach((utente,ordini)-> System.out.println("Customer "+utente +" ha speso:" + ordini));
+        double averageSpent = order.stream().mapToDouble(order5-> order5.getProducts().stream().mapToDouble(productS->productS.getPrice()).sum()).average().getAsDouble();
 
         List<Product> productsSortedByPrice = productList.stream().sorted(Comparator.comparingDouble(Product::getPrice).reversed()).limit(3).toList();
         System.out.println("Prodotti più costosi: ");
         productsSortedByPrice.forEach(System.out::println);
+        System.out.println("Media spesa in tutti gli ordini: "+averageSpent);
+        Map<String, Double> totalCategoryValues = productList.stream()
+                .collect(Collectors.groupingBy(Product::getCategory, Collectors.summingDouble(Product::getPrice)));
+        totalCategoryValues.forEach((category, total) -> {
+            System.out.println("Category: " + category + "; Total value = " + total + "€");
+        });
     }
     }
